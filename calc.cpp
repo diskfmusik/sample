@@ -1,17 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <conio.h>
 
-// トークンの種類
-enum TOK_TYPE
+typedef enum
 {
-	TOK_NUM,	// 数字
-	TOK_PLUS,	// operator +
-	TOK_MINUS,	// operator -
-	TOK_MUL,	// operator *
-	TOK_INVALID,// 予期せぬトークン
-};
+	TOK_NUM,
+	TOK_PLUS,
+	TOK_MINUS,
+	TOK_MUL,
+	TOK_INVALID,
+}TOK_TYPE;
 
 #define BUF_SIZE (16)
 
@@ -21,7 +19,7 @@ TOK_TYPE get_num(FILE *_fp, int *_num)
 	char buf[BUF_SIZE];
 	int i = 0;
 
-	while ((c = fgetc(_fp)) != '\n')
+	while ((c = fgetc(_fp)) != '\n' && c != EOF)
 	{
 		buf[i++] = c;
 
@@ -37,22 +35,24 @@ TOK_TYPE get_num(FILE *_fp, int *_num)
 	return TOK_NUM;
 }
 
-TOK_TYPE get_tok(int _c)
+TOK_TYPE get_tok(FILE *_fp)
 {
+	int c;
+	c = fgetc(_fp);
 
-	if (_c == '+')
+	if (c == '+')
 	{
-		printf("+\n");
+		//printf("+\n");
 		return TOK_PLUS;
 	}
-	else if (_c == '-')
+	else if (c == '-')
 	{
-		printf("-\n");
+		//printf("-\n");
 		return TOK_MINUS;
 	}
-	else if (_c == '*')
+	else if (c == '*')
 	{
-		printf("*\n");
+		//printf("*\n");
 		return TOK_MUL;
 	}
 
@@ -72,13 +72,14 @@ void main()
 
 	printf("input operator   : ");
 	TOK_TYPE op;
-	op = get_tok(_getch());
+	op = get_tok(stdin);
 
 	if (op == TOK_INVALID)
 	{
 		printf("invalid operator\n");
 		return;
 	}
+	getchar();
 
 
 	printf("input second num : ");
