@@ -2,26 +2,27 @@
 #include <functional>
 
 
-// ƒ‰ƒ€ƒ_®‚ğˆø”‚É
+// ãƒ©ãƒ ãƒ€å¼ã‚’å¼•æ•°ã«
 void func(std::function< void() > _f)
 {
 	_f();
 }
 
 
-void func(std::function< int(int _n) > _f)
+void func(std::function< void(int) > _f, int _n)
 {
-	//_f(_n);
+	_f(_n);
 }
 
 
 void main()
 {
+    func( [](int n) { printf("%d\n", n); }, 10 );
 
 #if 0
 	int a = 0;
 
-	// ƒ‰ƒ€ƒ_® –³–¼ŠÖ”
+	// ãƒ©ãƒ ãƒ€å¼ ç„¡åé–¢æ•°
 	auto func = [&]()
 	{
 		a = 50;
